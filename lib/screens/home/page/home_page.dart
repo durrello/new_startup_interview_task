@@ -13,20 +13,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   // Variables to hold count.
   int _counter = 0;
-  int value = 0;
 
   void increment() {
     setState(() {
-      value = _counter++;
+      _counter++;
     });
   }
 
   void decrement() {
     setState(() {
-      value = _counter--;
+      _counter--;
     });
   }
 
@@ -43,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            '$value',
+            '$_counter',
             style: TextStyle(fontSize: 80.0),
           ),
           SizedBox(
