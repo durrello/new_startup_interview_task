@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:interview_task/helper/provider_helper.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
 import 'package:interview_task/theme/theme.dart';
 import 'package:interview_task/widgets/snackbar.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/old_user.dart';
 import '../widgets/sign_up_text.dart';
@@ -13,7 +15,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  Future registerUser() async {
+  Future registerUser(
+      String email, String password, BuildContext context) async {
     setState(() {
       _isLoading = true;
     });
@@ -60,10 +63,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   backgroundColor: warning);
             } else {
               // Register user.
+
+              print('$email + $password');
+              ProviderState _providerState =
+                  Provider.of<ProviderState>(context, listen: false);
+              try {
+                if (await _providerState.signUpUser(email, password)) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                }
+              } catch (e) {
+                print(e);
+              }
               setState(() {
                 _isLoading = false;
               });
-              Navigator.pushNamed(context, HomePage.id);
               CustomSnackBar(context, Text('Welcome to New Startup'),
                   backgroundColor: success);
             }
@@ -214,6 +228,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 42.0),
                           child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(primaryColor),
                             backgroundColor: white,
                           ),
                         ),
@@ -233,7 +249,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                               color: primaryColor, fontFamily: 'WorkSansBold'),
                         ),
-                        onPressed: () => registerUser(),
+                        onPressed: () => registerUser(loginEmailController.text,
+                            signupPasswordController.text, context),
                       ),
                       SizedBox(width: 10)
                     ],

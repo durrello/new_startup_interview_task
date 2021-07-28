@@ -6,6 +6,7 @@ import 'package:interview_task/theme/theme.dart';
 class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         body: Stack(children: <Widget>[
       Container(

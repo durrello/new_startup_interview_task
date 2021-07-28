@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:interview_task/helper/provider_helper.dart';
 import 'package:interview_task/screens/auth/login/widget/first_time.dart';
 import 'package:interview_task/screens/auth/login/widget/vertical_text.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
 import 'package:interview_task/theme/theme.dart';
 import 'package:interview_task/widgets/snackbar.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = 'login_screen';
@@ -17,7 +19,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  Future registerUser() async {
+  Future registerUser(context, String email, String password) async {
+    ProviderState _providerState =
+        Provider.of<ProviderState>(context, listen: false);
+
     setState(() {
       _isLoading = true;
     });
@@ -46,9 +51,18 @@ class _LoginPageState extends State<LoginPage> {
               backgroundColor: warning);
         } else {
           // Login user
+          try {
+            if (await _providerState.loginUser(email, password)) {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            }
+          } catch (e) {
+            print(e);
+          }
           setState(() {
             _isLoading = false;
           });
+
           Navigator.pushNamed(context, HomePage.id);
           CustomSnackBar(context, Text('Welcome to New Startup'),
               backgroundColor: success);
@@ -155,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                                       vertical: 10.0, horizontal: 42.0),
                                   child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.green),
+                                        primaryColor),
                                     backgroundColor: white,
                                   ),
                                 ),
@@ -173,7 +187,8 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.all(20),
                             child: ElevatedButton(
                               onPressed: () {
-                                registerUser();
+                                registerUser(context, loginEmailController.text,
+                                    loginPasswordController.text);
                               },
                               child: Text(
                                 'Login'.toUpperCase(),

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:interview_task/helper/provider_helper.dart';
 import 'package:interview_task/screens/about/page/about_page.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
 import 'package:interview_task/screens/profile/page/profile_page.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ProviderState _providerState =
+        Provider.of<ProviderState>(context, listen: false);
+
     String mainProfilePic = "assets/images/logo.png";
 
     return Drawer(
@@ -26,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text("John Doe"),
-                accountEmail: Text("johndoe@email.com"),
+                accountEmail: Text("Email : ${_providerState.getEmail}"),
                 currentAccountPicture: GestureDetector(
                     child: CircleAvatar(
                       backgroundImage: AssetImage(mainProfilePic),

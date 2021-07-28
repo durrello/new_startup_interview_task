@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:interview_task/screens/welcome/onboarding/pages/onboarding_page.dart';
 import 'package:interview_task/theme/theme.dart';
 
-
 class SplashScreen extends StatefulWidget {
   static String id = 'splash_screen';
 
