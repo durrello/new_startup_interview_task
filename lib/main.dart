@@ -1,65 +1,54 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
+import 'package:flutter/services.dart';
+
+import 'screens/about/page/about_page.dart';
+import 'screens/auth/login/page/login_page.dart';
+import 'screens/auth/register/page/register_page.dart';
+import 'screens/home/page/home_page.dart';
+import 'screens/profile/page/profile_page.dart';
+import 'screens/welcome/splash/pages/splash_page.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]).then(
+    (_) => runApp(
+      MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'New Startup',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness:
+            Platform.isAndroid ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarDividerColor: Colors.grey,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), 
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'New Startup',
+      theme: ThemeData(fontFamily: 'OpenSans'),
+      initialRoute: SplashScreen.id,
+      routes: {
+        SplashScreen.id: (context) => SplashScreen(),
+        RegisterPage.id: (context) => RegisterPage(),
+        LoginPage.id: (context) => LoginPage(),
+        HomePage.id: (context) => HomePage(),
+        ProfilePage.id: (context) => ProfilePage(),
+        AboutPage.id: (context) => AboutPage(),
+      },
     );
   }
 }
