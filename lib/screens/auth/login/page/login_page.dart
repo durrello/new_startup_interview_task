@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_task/helper/provider_helper.dart';
+import 'package:interview_task/service/authentication.dart';
 import 'package:interview_task/screens/auth/login/widget/first_time.dart';
 import 'package:interview_task/screens/auth/login/widget/vertical_text.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           // Login user
           try {
-            if (await _providerState.loginUser(email, password)) {
+            if (await _providerState.loginUser(email, password, '${_providerState.getName}')) {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
             }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_task/helper/provider_helper.dart';
+import 'package:interview_task/service/authentication.dart';
 import 'package:interview_task/screens/about/page/about_page.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
 import 'package:interview_task/screens/profile/page/profile_page.dart';
@@ -30,7 +30,7 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text("John Doe"),
+                accountName: Text("Name: ${_providerState.getName}"),
                 accountEmail: Text("Email : ${_providerState.getEmail}"),
                 currentAccountPicture: GestureDetector(
                     child: CircleAvatar(

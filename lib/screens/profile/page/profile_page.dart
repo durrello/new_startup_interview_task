@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:interview_task/service/authentication.dart';
 import 'package:interview_task/theme/theme.dart';
 import 'package:interview_task/widgets/custom_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   static String id = 'profile_screen';
@@ -12,17 +14,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    ProviderState _providerState =
+        Provider.of<ProviderState>(context, listen: false);
     return Scaffold(
       backgroundColor: bgColorScreen,
       appBar: CustomAppBar(title: 'Profile'),
@@ -57,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           alignment: AlignmentDirectional.center,
                           child: Column(
                             children: <Widget>[
-                              Text('name',
+                              Text('New StartUp',
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: primaryColor,
@@ -83,9 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: <Widget>[
                             ListTile(
                               leading: Icon(Icons.email, color: primaryColor),
-                              title: Text("E-Mail",
+                              title: Text("Name",
                                   style: TextStyle(fontSize: 18, color: black)),
-                              subtitle: Text('email',
+                              subtitle: Text('${_providerState.getName}',
                                   style: TextStyle(
                                     fontSize: 15,
                                   )),
@@ -93,9 +87,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             Divider(),
                             ListTile(
                               leading: Icon(Icons.phone, color: primaryColor),
-                              title: Text("Phone Number",
+                              title: Text("E-Mail",
                                   style: TextStyle(fontSize: 18, color: black)),
-                              subtitle: Text('number',
+                              subtitle: Text('${_providerState.getEmail}',
                                   style: TextStyle(
                                     fontSize: 15,
                                   )),

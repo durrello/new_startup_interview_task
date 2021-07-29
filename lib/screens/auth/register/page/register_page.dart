@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:interview_task/helper/provider_helper.dart';
+import 'package:interview_task/service/authentication.dart';
 import 'package:interview_task/screens/home/page/home_page.dart';
 import 'package:interview_task/theme/theme.dart';
 import 'package:interview_task/widgets/snackbar.dart';
@@ -16,7 +16,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   Future registerUser(
-      String email, String password, BuildContext context) async {
+      String email, String password, String name, BuildContext context) async {
     setState(() {
       _isLoading = true;
     });
@@ -63,14 +63,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   backgroundColor: warning);
             } else {
               // Register user.
-
-              print('$email + $password');
               ProviderState _providerState =
                   Provider.of<ProviderState>(context, listen: false);
               try {
-                if (await _providerState.signUpUser(email, password)) {
+                if (await _providerState.signUpUser(email, password, name)) {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => HomePage(uid: _providerState.getUid)));
                 }
               } catch (e) {
                 print(e);
@@ -249,8 +247,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           style: TextStyle(
                               color: primaryColor, fontFamily: 'WorkSansBold'),
                         ),
-                        onPressed: () => registerUser(loginEmailController.text,
-                            signupPasswordController.text, context),
+                        onPressed: () => registerUser(
+                            loginEmailController.text,
+                            signupPasswordController.text,
+                            signupNameController.text,
+                            context),
                       ),
                       SizedBox(width: 10)
                     ],
