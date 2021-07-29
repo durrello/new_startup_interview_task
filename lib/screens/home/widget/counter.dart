@@ -35,14 +35,14 @@ class _CounterState extends State<Counter> {
   }
 
   void increment(_providerState) {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('newstartup')
         .doc('${_providerState.getUid}')
         .update({"counter": _counter++});
   }
 
   void decrement(_providerState) {
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection('newstartup')
         .doc('${_providerState.getUid}')
         .update({"counter": _counter--});

@@ -52,20 +52,21 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           // Login user
           try {
-            if (await _providerState.loginUser(email, password, '${_providerState.getName}')) {
+            if (await _providerState.loginUser(
+                email, password, '${_providerState.getName}')) {
+              setState(() {
+                _isLoading = false;
+              });
+
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
+
+              CustomSnackBar(context, Text('Welcome to New Startup'),
+                  backgroundColor: success);
             }
           } catch (e) {
             print(e);
           }
-          setState(() {
-            _isLoading = false;
-          });
-
-          Navigator.pushNamed(context, HomePage.id);
-          CustomSnackBar(context, Text('Welcome to New Startup'),
-              backgroundColor: success);
         }
       }
     }
