@@ -94,7 +94,14 @@ class _CounterState extends State<Counter> {
             ],
           ));
         } else {
-          return CircularProgressIndicator();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              Text('Loading...'),
+            ],
+          );
         }
       },
     );
