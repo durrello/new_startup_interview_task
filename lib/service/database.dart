@@ -19,8 +19,7 @@ class DatabaseService {
   }
 
   Future<void> getUserData(String name, String email, int counter) async {
-    var collection = FirebaseFirestore.instance.collection('newstartup');
-    var docSnapshot = await collection.doc('$uid').get();
+    var docSnapshot = await newStartUp.doc('$uid').get();
     if (docSnapshot.exists) {
       Map<String, dynamic> data = docSnapshot.data();
       counter = data['counter'];
